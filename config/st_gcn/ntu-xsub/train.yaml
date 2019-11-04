@@ -1,0 +1,40 @@
+work_dir: ./work_dir/recognition/ntu-xsub/ST_GCN
+
+# feeder
+feeder: feeder.feeder.Feeder
+train_feeder_args:
+  data_path: ../data/NTU-RGB-D/xsub/train_data.npy
+  label_path: ../data/NTU-RGB-D/xsub/train_label.pkl
+test_feeder_args:
+  data_path: ../data/NTU-RGB-D/xsub/val_data.npy
+  label_path: ../data/NTU-RGB-D/xsub/val_label.pkl
+
+# model
+model: net.motif_stgcn.Model
+model_args:
+  in_channels: 3
+  num_class: 60
+  dropout: 0
+  edge_importance_weighting: True
+  pyramid_pool: False
+  graph_args:
+    layout: 'ntu-rgb+d'
+    strategy: 'spatial'
+  vtdb_args:
+    interc: 2
+    gr: 4
+
+#optim
+weight_decay: 0.0001
+base_lr: 0.1
+step: [40, 50]
+
+# training
+optimizer: 'SGD'
+device: [0, 1]
+batch_size: 32
+test_batch_size: 32
+num_epoch: 80
+
+
+

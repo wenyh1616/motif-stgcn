@@ -1,0 +1,28 @@
+work_dir: ./models
+weights: ./models/kinetics-motif-gcn.pt
+#weights: ./models/kinetics-st_gcn.pt
+
+# feeder
+feeder: feeder.feeder.Feeder
+test_feeder_args:
+  data_path: ../data/Kinetics/kinetics-skeleton-sub/val_data.npy
+  label_path: ../data/Kinetics/kinetics-skeleton-sub/val_label.pkl
+
+# model
+model: net.motif_stgcn.Model
+model_args:
+  in_channels: 3
+  num_class: 30
+  edge_importance_weighting: True
+  pyramid_pool: True
+  graph_args:
+    layout: 'openpose'
+    strategy: 'spatial'
+  vtdb_args:
+    interc: 2
+    gr: 4
+
+# test 
+phase: test
+device: 0
+test_batch_size: 64

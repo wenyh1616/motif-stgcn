@@ -1,0 +1,27 @@
+work_dir: ./work_dir/recognition/ntu-xview/ST_GCN-[2-4]-epoch45-91.00
+weights: ./work_dir/recognition/ntu-xview/ST_GCN-[2-4]-epoch45-91.00/epoch55_model.pt
+
+# feeder
+feeder: feeder.feeder.Feeder
+test_feeder_args:
+  data_path: ../data/NTU-RGB-D/xview/val_data.npy
+  label_path: ../data/NTU-RGB-D/xview/val_label.pkl
+# model
+model: net.motif_stgcn.Model
+model_args:
+  in_channels: 3
+  num_class: 60
+  dropout: 0
+  edge_importance_weighting: True
+  pyramid_pool: False
+  graph_args:
+    layout: 'ntu-rgb+d'
+    strategy: 'spatial'
+  vtdb_args:
+    interc: 2
+    gr: 4
+
+# test 
+phase: test
+device: [1]
+test_batch_size: 128
